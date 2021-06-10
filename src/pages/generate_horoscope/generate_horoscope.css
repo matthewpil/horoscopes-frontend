@@ -1,0 +1,71 @@
+html {
+  --background: rgb(200, 0, 0);
+  --foreground: rgb(250, 250, 250);
+}
+
+.horror_scope_container {
+  width: 100%;
+  float: left;
+}
+
+.horror_scope_container h1 {
+  width: 60%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--background);
+  color: var(--foreground);
+  margin-bottom: 0px;
+}
+
+.horror_scope_container table {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid var(--background);
+  padding: 2%;
+}
+
+.generate_horoscope_button {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: var(--background);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.generate_horoscope_button input {
+  font-size: 25px;
+  margin: 2%;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+.generate_horoscope_button input:hover {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.horror_scope_container table tr th,
+.horror_scope_container table tr td {
+  width: 50%;
+  text-align: left;
+  font-size: 20px;
+  padding: 2%;
+}
+
+.horror_scope_container table tr td select,
+.horror_scope_container table tr td input {
+  width: 90%;
+  font-size: 20px;
+}
+
+.horror_scope_container table tr td select {
+  width: 91.2%;
+  font-size: 20px;
+}
