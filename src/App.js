@@ -5,8 +5,8 @@ import "./App.css";
 import Home from "./pages/home/home";
 import GenerateHoroscopes from "./pages/generate_horoscope/generate_horoscope";
 import { authRequired } from "./components/protected_route/auth_required";
-import Logout from "./components/logout/logout";
 import Navbar from "./components/navbar/navbar";
+import Dashboard from "./pages/dashboard/dashboard";
 
 function App() {
   return (
@@ -15,7 +15,8 @@ function App() {
         <Navbar />
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/generate">{authRequired(GenerateHoroscopes)}</Route>
+          <Route path="/details">{authRequired(GenerateHoroscopes)}</Route>
+          <Route path="/dashboard">{authRequired(Dashboard)}</Route>
         </Switch>
       </Router>
     </>

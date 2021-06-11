@@ -7,7 +7,7 @@ function AuthRequired({ WrappedComponent, ...props }) {
   if (loggedIn) {
     return <WrappedComponent {...props} />;
   }
-  return <Redirect to={"/login"} />;
+  return <Redirect to={"/"} />;
 }
 
 export function authRequired(WrappedComponent, props) {

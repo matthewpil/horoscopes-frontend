@@ -1,5 +1,6 @@
 html {
   --background-header: rgb(200, 0, 0);
+  --background-header-accent: rgb(136, 1, 1);
   --foreground-header: rgb(250, 250, 250);
   --dark-grey-header: rgb(80, 80, 80);
 }

@@ -3,8 +3,10 @@ import "./navbar.css";
 export default function Navbar() {
   return (
     <nav className="nav-bar">
-      <Logout />
-      <a className="navbar-link" href="/profile"></a>
+      <Logout className="navbar-link" />
+      <a className="navbar-link" href="/profile">
+        Profile
+      </a>
     </nav>
   );
 }

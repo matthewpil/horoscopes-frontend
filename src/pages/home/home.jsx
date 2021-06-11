@@ -5,7 +5,7 @@ export default function Home() {
   const history = useHistory();
   const onLoginSuccess = (res) => {
     sessionStorage.setItem("loggedIn", true);
-    history.push("/generate");
+    history.push("/details");
   };
 
   const onLoginFail = (res) => {
