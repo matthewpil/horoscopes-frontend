@@ -3,15 +3,9 @@ import "./generate_horoscope.css";
 export default function GenerateHoroscopes() {
   return (
     <div className="horror_scope_container">
-      <h1>
-        Welcome to{" "}
-        <b>
-          <i>'HORROR SCOPES'</i>{" "}
-        </b>{" "}
-        . Based on the questions below, we are able to generate your horoscope
-      </h1>
+      <h1>Your Details</h1>
 
-      <form action="" method="POST">
+      <form action="/dashboard">
         <table>
           <tr>
             <th>
@@ -81,7 +75,7 @@ export default function GenerateHoroscopes() {
           </tr>
         </table>
         <div className="generate_horoscope_button">
-          <input type="submit" value="Generate Horoscope" />
+          <input type="submit" value="Continue" />
         </div>
       </form>
     </div>

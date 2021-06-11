@@ -1,5 +1,16 @@
 import "./home.css";
+import { GoogleLogin } from "react-google-login";
+import { useHistory } from "react-router-dom";
 export default function Home() {
+  const history = useHistory();
+  const onLoginSuccess = (res) => {
+    sessionStorage.setItem("loggedIn", true);
+    history.push("/details");
+  };
+
+  const onLoginFail = (res) => {
+    console.log("Login failed: ", res);
+  };
   return (
     <div className="header">
       <h1>Welcome to Totally Legit Horoscopes.</h1>{" "}
@@ -10,7 +21,15 @@ export default function Home() {
       </h1>
       <div className="button-group">
         {" "}
-        <button>Login</button>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          buttonText="Sign in with Google"
+          onSuccess={onLoginSuccess}
+          onFailure={onLoginFail}
+          cookiePolicy={"single_host_origin"}
+          isSignedIn={true}
+          uxMode={"popup"}
+        />
       </div>
       <div className="footer">Total Legit Horoscopes</div>
     </div>
