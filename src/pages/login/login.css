@@ -1,9 +1,0 @@
-.external-link {
-  color: var(--foreground);
-  margin: 2%;
-}
-
-.external-link:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}

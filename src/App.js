@@ -2,8 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
-import About from "./pages/about/about";
-import Login from "./pages/login/login";
+import Home from "./pages/home/home";
 import GenerateHoroscopes from "./pages/generate_horoscope/generate_horoscope";
 import { authRequired } from "./components/protected_route/auth_required";
 import Logout from "./components/logout/logout";
@@ -15,13 +14,8 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
+          <Route path="/" exact component={Home} />
           <Route path="/generate">{authRequired(GenerateHoroscopes)}</Route>
-          <Route path="/about">
-            <About />
-          </Route>
         </Switch>
       </Router>
     </>
