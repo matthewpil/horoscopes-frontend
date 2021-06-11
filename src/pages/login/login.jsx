@@ -1,5 +1,19 @@
 import "./login.css";
+import React from "react";
+import { GoogleLogin } from "react-google-login";
+import { useHistory } from "react-router-dom";
+
 export default function Login() {
+  const history = useHistory();
+  const onLoginSuccess = (res) => {
+    sessionStorage.setItem("loggedIn", true);
+    history.push("/generate");
+  };
+
+  const onLoginFail = (res) => {
+    console.log("Login failed: ", res);
+  };
+
   return (
     <div className="horror_scope_container">
       <h1>Login to Horror Scopes</h1>
@@ -28,7 +42,15 @@ export default function Login() {
           <input type="submit" value="Login" />
         </div>
         <div className="generate_horoscope_button">
-          <div className="external-link">Login with external service</div>
+          <GoogleLogin
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            buttonText="Sign in with Google"
+            onSuccess={onLoginSuccess}
+            onFailure={onLoginFail}
+            cookiePolicy={"single_host_origin"}
+            isSignedIn={true}
+            uxMode={"popup"}
+          />
           <div className="external-link">Do not yet have an account</div>
         </div>
       </form>
