@@ -1,6 +1,6 @@
-import "./generate_horoscope.css";
+import "./details.css";
 
-export default function GenerateHoroscopes() {
+export default function Details() {
   return (
     <div className="horror_scope_container">
       <h1>Your Details</h1>

@@ -3,7 +3,6 @@ import { Redirect } from "react-router-dom";
 
 function AuthRequired({ WrappedComponent, ...props }) {
   const loggedIn = sessionStorage.getItem("loggedIn") === "true";
-  console.log(loggedIn);
   if (loggedIn) {
     return <WrappedComponent {...props} />;
   }

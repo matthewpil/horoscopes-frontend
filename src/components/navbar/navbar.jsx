@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <nav className="nav-bar">
       <Logout className="navbar-link" />
-      <a className="navbar-link" href="/profile">
+      <a className="navbar-link" href="/details">
         Profile
       </a>
     </nav>
