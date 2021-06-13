@@ -1,0 +1,8 @@
+.matches-header {
+  background-color: var(--background-header);
+  width: 100%;
+  height: 20%;
+  display: grid;
+  place-items: center;
+  color: var(--foreground);
+}
