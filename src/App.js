@@ -16,7 +16,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/details">{authRequired(Details)}</Route>
-          <Route path="/dashboard">{authRequired(Dashboard)}</Route>
+          <Route path="/dashboard">{Dashboard}</Route>
         </Switch>
       </Router>
     </>
