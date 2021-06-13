@@ -1,13 +1,13 @@
 import Card from "../base_card/card";
 import Icon from "../../icon/icon";
 import "./matches_card.css";
-import { iconData } from "../../../resources/star_sign_icons";
+import { zodiacSigns } from "../../../constants/zodiac_signs";
 
 export default function MatchesCard(props) {
-  const zodiacSigns = props.signs ?? {
-    love: iconData.aquarius,
-    friendship: iconData.aries,
-    career: iconData.cancer
+  const signs = props.signs ?? {
+    love: zodiacSigns.aquarius,
+    friendship: zodiacSigns.aries,
+    career: zodiacSigns.cancer
   };
   return (
     <Card width={30} height={15}>
@@ -16,23 +16,23 @@ export default function MatchesCard(props) {
         <section>
           <h3>LOVE</h3>
           <article className="icon">
-            <Icon type={zodiacSigns.love}/>
+            <Icon type={signs.love}/>
           </article>
-          <h4>{zodiacSigns.love.description}</h4>
+          <h4>{signs.love.description}</h4>
         </section>
         <section>
           <h3>FRIENDSHIP</h3>
           <article className="icon">
-            <Icon type={zodiacSigns.friendship}/>
+            <Icon type={signs.friendship}/>
           </article>
-          <h4>{zodiacSigns.friendship.description}</h4>
+          <h4>{signs.friendship.description}</h4>
         </section>
         <section>
           <h3>CAREER</h3>
           <article className="icon">
-            <Icon type={zodiacSigns.career}/>
+            <Icon type={signs.career}/>
           </article>
-          <h4>{zodiacSigns.career.description}</h4>
+          <h4>{signs.career.description}</h4>
         </section>
       </main>
     </Card>
