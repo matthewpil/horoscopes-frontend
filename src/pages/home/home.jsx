@@ -31,7 +31,7 @@ export default function Home() {
           uxMode={"popup"}
         />
       </div>
-      <div className="footer">Total Legit Horoscopes</div>
+      <div className="footer">Totally Legit Horoscopes</div>
     </div>
   );
 }
