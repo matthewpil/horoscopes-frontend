@@ -1,10 +1,11 @@
 import "./home.css";
 import { GoogleLogin } from "react-google-login";
 import { useHistory } from "react-router-dom";
+import { login } from "../../utils/auth/login";
 export default function Home() {
   const history = useHistory();
   const onLoginSuccess = (res) => {
-    sessionStorage.setItem("loggedIn", true);
+    login(res);
     history.push("/details");
   };
 
