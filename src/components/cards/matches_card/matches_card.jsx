@@ -7,33 +7,23 @@ export default function MatchesCard(props) {
   const signs = props.signs ?? {
     love: zodiacSigns.aquarius,
     friendship: zodiacSigns.aries,
-    career: zodiacSigns.cancer
+    career: zodiacSigns.cancer,
   };
   return (
     <Card width={30} height={15}>
       <header className="matches-header">Today's Matches</header>
       <main>
-        <section>
-          <h3>LOVE</h3>
-          <article className="icon">
-            <Icon type={signs.love}/>
-          </article>
-          <h4>{signs.love.description}</h4>
-        </section>
-        <section>
-          <h3>FRIENDSHIP</h3>
-          <article className="icon">
-            <Icon type={signs.friendship}/>
-          </article>
-          <h4>{signs.friendship.description}</h4>
-        </section>
-        <section>
-          <h3>CAREER</h3>
-          <article className="icon">
-            <Icon type={signs.career}/>
-          </article>
-          <h4>{signs.career.description}</h4>
-        </section>
+        {Object.keys(signs).map((key) => {
+          return (
+            <section>
+              <h3>{key.toUpperCase()}</h3>
+              <article className="icon">
+                <Icon type={signs[key]} />
+              </article>
+              <h4>{signs[key].description}</h4>
+            </section>
+          );
+        })}
       </main>
     </Card>
   );
