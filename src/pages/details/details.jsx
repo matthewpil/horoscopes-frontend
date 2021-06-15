@@ -40,7 +40,10 @@ export default function Details() {
               <label>3. What is your star sign?</label>
             </th>
             <td>
-              <input type="text" placeholder="star" />
+              <select>
+                <option></option>
+                <option>Metal tracking</option>
+              </select>
             </td>
           </tr>
 
@@ -49,27 +52,30 @@ export default function Details() {
               <label>4. What is your hobby?</label>{" "}
             </th>
             <td>
-              <input type="text" placeholder="Hobby" />
+              <select>
+                <option>Fishing</option>
+                <option>Metal tracking</option>
+              </select>
             </td>
           </tr>
 
           <tr>
             <th>
-              <label>5. I am the nth of child of the family?</label>
+              <label>5. I am the nth child of my family?</label>
             </th>
             <td>
-              <input type="text" placeholder="child number" />
+              <input type="number" placeholder="child number" />
             </td>
           </tr>
 
           <tr>
             <th>
-              <label>6. Gender</label>
+              <label>6. My Profession</label>
             </th>
             <td>
               <select>
-                <option>Male</option>
-                <option>Female</option>
+                <option>Doctor</option>
+                <option>Game Design</option>
               </select>
             </td>
           </tr>
