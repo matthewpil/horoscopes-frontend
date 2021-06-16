@@ -1,0 +1,30 @@
+.star-ratings-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.star-rating-heading{
+    background-color: grey;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.star-ratings-values{
+    width: 100%;
+}
+
+.star-rating-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 2%;
+    margin-right: 2%;
+}

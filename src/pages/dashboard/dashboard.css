@@ -76,6 +76,11 @@ html {
   color: var(--background-header);
   text-align: center;
 }
+
+.dashboard_container_star_ratings{
+  margin-right: 10vw;
+  margin-left: 10vw;
+}
 .todays_date {
   float: left;
   font-size: 20px;

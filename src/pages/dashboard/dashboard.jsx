@@ -1,5 +1,6 @@
 /* eslint-disable no-lone-blocks */
 import { useState } from "react";
+import StarRating from "../../components/starRatings/starRatings";
 import "./dashboard.css";
 const MONTH_AS_TEXT = [
   "January",
@@ -43,6 +44,12 @@ export default function Dashboard() {
     newTabs[tab_name].isClicked = true;
     setHoroscopeTabs(newTabs);
   };
+
+  const starRatings = {
+    Love: 2,
+    Success: 3,
+    'INVEST IN AMC': 5,
+  };
   return (
     <div className="horror_scope_container">
       <div className="dashboard_container">
@@ -71,6 +78,10 @@ export default function Dashboard() {
             </div>
           );
         })}
+
+        <section className="dashboard_container_star_ratings">
+          <StarRating starRatings={starRatings} />
+        </section>
       </div>
     </div>
   );
