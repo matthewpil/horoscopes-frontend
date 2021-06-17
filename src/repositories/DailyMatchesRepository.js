@@ -21,7 +21,9 @@ export const DailyMatchesRepository = {
       return DailyMatchesRepository.responseData;
     }
 
-    const result = await requests.get(`${ENDPOINT}/${starSignId}/matches`);
+    const result = await requests.get(
+      `${ENDPOINT}/${starSignId}/MatchesForToday`
+    );
     DailyMatchesRepository.responseData = result;
     return result;
   },

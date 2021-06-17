@@ -10,7 +10,7 @@ export const UserRepository = {
       return UserRepository.responseData;
     }
 
-    const result = await requests.get(`${ENDPOINT}/${1}`);
+    const result = await requests.get(`${ENDPOINT}/${3}`);
     UserRepository.responseData = result;
     return result;
   },
@@ -18,6 +18,6 @@ export const UserRepository = {
     const options = {
       body: JSON.stringify(userData),
     };
-    return await requests.post(`${ENDPOINT}`, options);
+    return await requests.put(`${ENDPOINT}?email=${userData.email}`, options);
   },
 };

@@ -24,8 +24,16 @@ const post = (url, params) => {
   return request(url, { ...options, ...params });
 };
 
+const put = (url, params) => {
+  const options = {
+    method: "PUT",
+  };
+
+  return request(url, { ...options, ...params });
+};
 export const requests = {
   request,
   get,
   post,
+  put,
 };

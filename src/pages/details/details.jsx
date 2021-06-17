@@ -31,21 +31,22 @@ const Details = () => {
 
     Promise.all([hobbiesPromise, professionsPromise, dinosaursPromise]).then(
       (values) => {
-        setHobbies(
-          values[0].map((hobby) => ({ value: hobby.name, label: hobby.name }))
-        );
-        setProfessions(
-          values[1].map((profession) => ({
-            value: profession.name,
-            label: profession.name,
-          }))
-        );
-        setDinosaurs(
-          values[2].map((dinosaur) => ({
-            value: dinosaur.name,
-            label: dinosaur.name,
-          }))
-        );
+        const responseHobbies = values[0].map((hobby) => ({
+          value: hobby.name,
+          label: hobby.name,
+        }));
+        const responseProfessions = values[1].map((profession) => ({
+          value: profession.name,
+          label: profession.name,
+        }));
+        const responseDinosaurs = values[2].map((dinosaur) => ({
+          value: dinosaur.name,
+          label: dinosaur.name,
+        }));
+
+        setHobbies(responseHobbies);
+        setProfessions(responseProfessions);
+        setDinosaurs(responseDinosaurs);
 
         const currentUser = CurrentUser.get();
         if (!validateUserDetails(currentUser)) {
@@ -53,19 +54,20 @@ const Details = () => {
         }
 
         setSelectedProfession(
-          professions.find(
+          responseProfessions.find(
             (profession) => profession.value === currentUser.profession.name
           )
         );
         setSelectedDinosaur(
-          dinosaurs.find(
+          responseDinosaurs.find(
             (dinosaur) => dinosaur.value === currentUser.favoriteDinosaur.name
           )
         );
+
         setSelectedHobbies(
-          hobbies.filter((hobby) =>
-            values[0].map((h) => h.name).includes(hobby.value)
-          )
+          responseHobbies.filter((hobby) => {
+            return currentUser.hobbies.map((h) => h.name).includes(hobby.value);
+          })
         );
         setDateOfBirth(
           new Date(currentUser.dateOfBirth).toISOString().substr(0, 10)
@@ -87,7 +89,8 @@ const Details = () => {
     };
 
     if (validateUserDetails(userData)) {
-      UserRepository.updateUserDetails(userData);
+      UserRepository.updateUserDetails({ ...CurrentUser.get(), ...userData });
+      CurrentUser.set({ ...CurrentUser.get(), ...userData });
       history.push("/dashboard");
     } else {
       alert("Invalid data entered");

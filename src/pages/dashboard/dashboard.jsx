@@ -7,6 +7,9 @@ import { StarRatingsRepository } from "../../repositories/StarRatingsRepository"
 import ModalPopUp from "../../components/modal/modal";
 import "./dashboard.css";
 import MatchesCard from "../../components/cards/matches_card/matches_card";
+import { DailyMatchesRepository } from "../../repositories/DailyMatchesRepository";
+import CurrentUser from "../../singletons/CurrentUser";
+import { zodiacSigns } from "../../constants/zodiac_signs";
 
 const MONTH_AS_TEXT = [
   "January",
@@ -48,6 +51,7 @@ export default function Dashboard() {
   const [careerHoroscope, setCareerHoroscope] = useState(
     "Querying the stars..."
   );
+  const [dailyMatches, setDailyMatches] = useState();
   const [loveHoroscope, setLoveHoroscope] = useState("Querying the stars...");
   const [starRatings, setStarRatings] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -59,6 +63,15 @@ export default function Dashboard() {
     Career: { isClicked: false },
     Love: { isClicked: false },
   });
+
+  const findSign = (name) => {
+    console.log(name);
+    return zodiacSigns[
+      Object.keys(zodiacSigns).find(
+        (element) => zodiacSigns[element]?.description === name
+      )
+    ];
+  };
 
   useEffect(() => {
     HoroscopeRepository.getUserDailyHoroscope().then((response) => {
@@ -73,6 +86,17 @@ export default function Dashboard() {
 
     StarRatingsRepository.getUserDailyStarRatings().then((response) => {
       setStarRatings(response);
+    });
+    DailyMatchesRepository.getUserDailyMatches({
+      starSignId: CurrentUser.get()?.starSign?.name,
+    }).then((response) => {
+      const map = {
+        love: findSign(response.loveMatch.name),
+        friendship: findSign(response.friendshipMatch.name),
+        career: findSign(response.careerMatch.name),
+      };
+
+      setDailyMatches(map);
     });
   }, []);
 
@@ -145,7 +169,7 @@ export default function Dashboard() {
           <StarRating starRatings={starRatings} />
         </section>
         <section className="matches-card-component">
-          <MatchesCard />
+          <MatchesCard signs={dailyMatches} />
         </section>
       </div>
     </div>
