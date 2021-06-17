@@ -36,6 +36,7 @@ function getTodaysDate() {
     todayDate.getFullYear()
   );
 }
+
 export default function Dashboard() {
   const [HOROSCOPE_TYPE_TABS, setHoroscopeTabs] = useState({
     Daily: { isClicked: true },
@@ -60,7 +61,6 @@ export default function Dashboard() {
     Success: 3,
     "INVEST IN AMC": 5,
   };
-
   return (
     <div className="horror_scope_container">
       <div className="dashboard_container">
@@ -71,26 +71,30 @@ export default function Dashboard() {
         <div className="dashboard_container_display_horoscope">
           <div className="dashboard_container_display_horoscope_header">
             <span className="todays_date">{getTodaysDate()}</span>
-            <span className="view_all_button">
-              <button onClick={() => setShowModal(true)}>
-                View Past Horoscopes
-              </button>
-            </span>
+
+            <button
+              className="view_all_button"
+              onClick={() => setShowModal(true)}
+            >
+              View Past Horoscopes
+            </button>
           </div>
           <p id="horoscope_content">View your daily horoscope here</p>
         </div>
-        {Object.keys(HOROSCOPE_TYPE_TABS).map((element) => {
-          return (
-            <div
-              className={`dashboard_container_display_tab ${
-                HOROSCOPE_TYPE_TABS[element].isClicked ? "is-clicked" : ""
-              }`}
-              onClick={() => setSelectedTab(element)}
-            >
-              {element}
-            </div>
-          );
-        })}
+        <div className="dashboard_container_display_tabs">
+          {Object.keys(HOROSCOPE_TYPE_TABS).map((element) => {
+            return (
+              <div
+                className={`dashboard_container_display_tab ${
+                  HOROSCOPE_TYPE_TABS[element].isClicked ? "is-clicked" : ""
+                }`}
+                onClick={() => setSelectedTab(element)}
+              >
+                {element}
+              </div>
+            );
+          })}
+        </div>
         <section>
           <ModalPopUp
             closeModal={() => setShowModal(false)}
