@@ -11,9 +11,8 @@ export const StarSignsRepository = {
       return StarSignsRepository.responseData;
     }
 
-    return await requests.get(ENDPOINT);
-  },
-  getStarSignById: async (id) => {
-    return await requests.get(`${ENDPOINT}/${id}`);
+    const result = await requests.get(ENDPOINT);
+    StarSignsRepository.responseData = result;
+    return result;
   },
 };

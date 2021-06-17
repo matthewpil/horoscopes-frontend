@@ -2,20 +2,22 @@ import { CallType } from "./CallType";
 import { requests } from "./request";
 
 const ENDPOINT = `${process.env.REACT_APP_API_BASE}Users`;
-
+//TODO:Update these once endpoints are in backend
 export const UserRepository = {
   responseData: null,
-  getUserById: async ({ userId = 1, callType = CallType.API }) => {
+  getUserDetails: async (callType = CallType.API) => {
     if (UserRepository.responseData && callType === CallType.Cache) {
       return UserRepository.responseData;
     }
 
-    return await requests.get(`${ENDPOINT}/${userId}`);
+    const result = await requests.get(`${ENDPOINT}/${1}`);
+    UserRepository.responseData = result;
+    return result;
   },
-  updateUserById: async ({ userId = 1, userData }) => {
+  updateUserDetails: async (userData) => {
     const options = {
       body: JSON.stringify(userData),
     };
-    return await requests.post(`${ENDPOINT}/${userId}`, options);
+    return await requests.post(`${ENDPOINT}`, options);
   },
 };

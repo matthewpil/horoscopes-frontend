@@ -11,6 +11,8 @@ export const DinosaurRepository = {
       return DinosaurRepository.responseData;
     }
 
-    return await requests.get(ENDPOINT);
+    const result = await requests.get(ENDPOINT);
+    DinosaurRepository.responseData = result;
+    return result;
   },
 };
