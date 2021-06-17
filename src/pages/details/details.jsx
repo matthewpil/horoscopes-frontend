@@ -5,10 +5,13 @@ import React, { useEffect, useState } from "react";
 import { HobbyRepository } from "../../repositories/HobbyRepository";
 import { DinosaurRepository } from "../../repositories/DinosaurRepository";
 import { ProfessionRepository } from "../../repositories/ProfessionRepository";
+import { useHistory } from "react-router-dom";
 
 const animatedComponents = makeAnimated();
 
 const Details = () => {
+  const history = useHistory();
+
   const [selectedHobbies, setSelectedHobbies] = useState([]);
   const [selectedProfession, setSelectedProfession] = useState();
   const [selectedDinosaur, setSelectedDinosaur] = useState();
@@ -22,7 +25,7 @@ const Details = () => {
   useEffect(() => {
     HobbyRepository.getHobbies().then((hobbies) => {
       setHobbies(
-        hobbies.map((hobby) => ({ value: hobby.Name, label: hobby.Name }))
+        hobbies.map((hobby) => ({ value: hobby.name, label: hobby.name }))
       );
     });
   }, []);
@@ -31,8 +34,8 @@ const Details = () => {
     ProfessionRepository.getProfessions().then((professions) => {
       setProfessions(
         professions.map((profession) => ({
-          value: profession.Name,
-          label: profession.Name,
+          value: profession.name,
+          label: profession.name,
         }))
       );
     });
@@ -42,8 +45,8 @@ const Details = () => {
     DinosaurRepository.getDinosaurs().then((dinosaurs) => {
       setDinosaurs(
         dinosaurs.map((dinosaur) => ({
-          value: dinosaur.Name,
-          label: dinosaur.Name,
+          value: dinosaur.name,
+          label: dinosaur.name,
         }))
       );
     });
@@ -58,6 +61,8 @@ const Details = () => {
       nthChild,
     };
     //TODO: call method on repo to update user
+
+    history.push("/dashboard");
   };
 
   return (
