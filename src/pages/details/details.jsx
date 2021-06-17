@@ -41,8 +41,8 @@ export default function Details() {
             </th>
             <td>
               <select>
-                <option></option>
-                <option>Metal tracking</option>
+                <option>Star Sign 1</option>
+                <option>Star Sign 2</option>
               </select>
             </td>
           </tr>
