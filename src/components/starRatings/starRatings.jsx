@@ -4,8 +4,6 @@ import { Rating } from "@material-ui/lab";
 export default function StarRating(props) {
   const starRatingsList = [];
 
-  console.log(props);
-
   const starRatings = props.starRatings;
 
   for (const property in starRatings) {

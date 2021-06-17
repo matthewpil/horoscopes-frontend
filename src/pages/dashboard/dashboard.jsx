@@ -1,7 +1,12 @@
 /* eslint-disable no-lone-blocks */
+import { useEffect } from "react";
 import { useState } from "react";
 import StarRating from "../../components/starRatings/starRatings";
+import { HoroscopeRepository } from "../../repositories/HoroscopeRepository";
+import { StarRatingsRepository } from "../../repositories/StarRatingsRepository";
+import ModalPopUp from "../../components/modal/modal";
 import "./dashboard.css";
+
 const MONTH_AS_TEXT = [
   "January",
   "February",
@@ -18,6 +23,13 @@ const MONTH_AS_TEXT = [
   "December",
 ];
 
+const pastHoroscopes = [
+  "Horoscope 1",
+  "Horoscope 2",
+  "Horoscope 3",
+  "Horoscope 4",
+];
+
 function getTodaysDate() {
   let todayDate = new Date();
   return (
@@ -28,12 +40,38 @@ function getTodaysDate() {
     todayDate.getFullYear()
   );
 }
+
 export default function Dashboard() {
+  const [selectedTabKey, setSelectedTabKey] = useState("Daily");
+  const [dailyHoroscope, setDailyHoroscope] = useState("Querying the stars...");
+  const [careerHoroscope, setCareerHoroscope] = useState(
+    "Querying the stars..."
+  );
+  const [loveHoroscope, setLoveHoroscope] = useState("Querying the stars...");
+  const [starRatings, setStarRatings] = useState();
+  const [showModal, setShowModal] = useState(false);
+
   const [HOROSCOPE_TYPE_TABS, setHoroscopeTabs] = useState({
-    Daily: { isClicked: true },
-    Career: { isClicked: false },
-    Love: { isClicked: false },
+    Daily: { isClicked: true, text: dailyHoroscope },
+    Career: { isClicked: false, text: careerHoroscope },
+    Love: { isClicked: false, text: loveHoroscope },
   });
+
+  useEffect(() => {
+    HoroscopeRepository.getUserDailyHoroscope().then((response) => {
+      setDailyHoroscope(response);
+    });
+    HoroscopeRepository.getUserCareerHoroscope().then((response) => {
+      setCareerHoroscope(response);
+    });
+    HoroscopeRepository.getUserLoveHoroscope().then((response) => {
+      setLoveHoroscope(response);
+    });
+
+    StarRatingsRepository.getUserDailyStarRatings().then((response) => {
+      setStarRatings(response);
+    });
+  }, []);
 
   const setSelectedTab = (tab_name) => {
     let newTabs = { ...HOROSCOPE_TYPE_TABS };
@@ -42,14 +80,10 @@ export default function Dashboard() {
     });
 
     newTabs[tab_name].isClicked = true;
+    setSelectedTabKey(tab_name);
     setHoroscopeTabs(newTabs);
   };
 
-  const starRatings = {
-    Love: 2,
-    Success: 3,
-    'INVEST IN AMC': 5,
-  };
   return (
     <div className="horror_scope_container">
       <div className="dashboard_container">
@@ -60,25 +94,39 @@ export default function Dashboard() {
         <div className="dashboard_container_display_horoscope">
           <div className="dashboard_container_display_horoscope_header">
             <span className="todays_date">{getTodaysDate()}</span>
-            <span className="view_all_button">
-              <button>View All Horoscopes</button>
-            </span>
-          </div>
-          <p id="horoscope_content">View your daily horoscope here</p>
-        </div>
-        {Object.keys(HOROSCOPE_TYPE_TABS).map((element) => {
-          return (
-            <div
-              className={`dashboard_container_display_tab ${
-                HOROSCOPE_TYPE_TABS[element].isClicked ? "is-clicked" : ""
-              }`}
-              onClick={() => setSelectedTab(element)}
-            >
-              {element}
-            </div>
-          );
-        })}
 
+            <button
+              className="view_all_button"
+              onClick={() => setShowModal(true)}
+            >
+              View Past Horoscopes
+            </button>
+          </div>
+          <p id="horoscope_content">
+            {HOROSCOPE_TYPE_TABS[selectedTabKey].text}
+          </p>
+        </div>
+        <div className="dashboard_container_display_tabs">
+          {Object.keys(HOROSCOPE_TYPE_TABS).map((element) => {
+            return (
+              <div
+                className={`dashboard_container_display_tab ${
+                  HOROSCOPE_TYPE_TABS[element].isClicked ? "is-clicked" : ""
+                }`}
+                onClick={() => setSelectedTab(element)}
+              >
+                {element}
+              </div>
+            );
+          })}
+        </div>
+        <section>
+          <ModalPopUp
+            closeModal={() => setShowModal(false)}
+            showModal={showModal}
+            pastHoroscopes={pastHoroscopes}
+          />
+        </section>
         <section className="dashboard_container_star_ratings">
           <StarRating starRatings={starRatings} />
         </section>

@@ -11,6 +11,8 @@ export const HobbyRepository = {
       return HobbyRepository.responseData;
     }
 
-    return await requests.get(ENDPOINT);
+    const result = await requests.get(ENDPOINT);
+    HobbyRepository.responseData = result;
+    return result;
   },
 };

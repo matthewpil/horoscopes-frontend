@@ -11,6 +11,8 @@ export const ProfessionRepository = {
       return ProfessionRepository.responseData;
     }
 
-    return await requests.get(ENDPOINT);
+    const result = await requests.get(ENDPOINT);
+    ProfessionRepository.responseData = result;
+    return result;
   },
 };
