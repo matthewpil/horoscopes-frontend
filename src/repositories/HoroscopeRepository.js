@@ -14,7 +14,7 @@ export const HoroscopeRepository = {
     if (HoroscopeRepository.responseData.Daily && callType === CallType.Cache) {
       return HoroscopeRepository.responseData.Daily;
     }
-    const result = await requests.get(`${ENDPOINT}/GeneralHoroscope`);
+    const result = await requests.get(`${ENDPOINT}GeneralHoroscope`);
     HoroscopeRepository.responseData.Daily = result;
     return result;
   },
@@ -25,7 +25,7 @@ export const HoroscopeRepository = {
     ) {
       return HoroscopeRepository.responseData.Career;
     }
-    const result = await requests.get(`${ENDPOINT}/CareerHoroscope`);
+    const result = await requests.get(`${ENDPOINT}CareerHoroscope`);
     HoroscopeRepository.responseData.Career = result;
     return result;
   },
@@ -33,7 +33,7 @@ export const HoroscopeRepository = {
     if (HoroscopeRepository.responseData.Love && callType === CallType.Cache) {
       return HoroscopeRepository.responseData.Love;
     }
-    const result = await requests.get(`${ENDPOINT}/LoveHoroscope`);
+    const result = await requests.get(`${ENDPOINT}LoveHoroscope`);
     HoroscopeRepository.responseData.Love = result;
     return result;
   },
