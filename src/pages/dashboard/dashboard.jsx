@@ -52,20 +52,22 @@ export default function Dashboard() {
   const [showModal, setShowModal] = useState(false);
 
   const [HOROSCOPE_TYPE_TABS, setHoroscopeTabs] = useState({
-    Daily: { isClicked: true, text: dailyHoroscope },
-    Career: { isClicked: false, text: careerHoroscope },
-    Love: { isClicked: false, text: loveHoroscope },
+    Daily: {
+      isClicked: true,
+    },
+    Career: { isClicked: false },
+    Love: { isClicked: false },
   });
 
   useEffect(() => {
     HoroscopeRepository.getUserDailyHoroscope().then((response) => {
-      setDailyHoroscope(response);
+      setDailyHoroscope(response.reading);
     });
     HoroscopeRepository.getUserCareerHoroscope().then((response) => {
-      setCareerHoroscope(response);
+      setCareerHoroscope(response.reading);
     });
     HoroscopeRepository.getUserLoveHoroscope().then((response) => {
-      setLoveHoroscope(response);
+      setLoveHoroscope(response.reading);
     });
 
     StarRatingsRepository.getUserDailyStarRatings().then((response) => {
@@ -82,6 +84,19 @@ export default function Dashboard() {
     newTabs[tab_name].isClicked = true;
     setSelectedTabKey(tab_name);
     setHoroscopeTabs(newTabs);
+  };
+
+  const getHoroscopeText = (selectedTabKey) => {
+    switch (selectedTabKey) {
+      case "Daily":
+        return dailyHoroscope;
+      case "Career":
+        return careerHoroscope;
+      case "Love":
+        return loveHoroscope;
+      default:
+        return "...Querying the stars";
+    }
   };
 
   return (
@@ -102,9 +117,7 @@ export default function Dashboard() {
               View Past Horoscopes
             </button>
           </div>
-          <p id="horoscope_content">
-            {HOROSCOPE_TYPE_TABS[selectedTabKey].text}
-          </p>
+          <p id="horoscope_content">{getHoroscopeText(selectedTabKey)}</p>
         </div>
         <div className="dashboard_container_display_tabs">
           {Object.keys(HOROSCOPE_TYPE_TABS).map((element) => {
