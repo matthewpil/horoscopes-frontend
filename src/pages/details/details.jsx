@@ -87,8 +87,7 @@ const Details = () => {
     };
 
     if (validateUserDetails(userData)) {
-      //TODO: READD WHEN FUNCTION EXISTS
-      // UserRepository.updateUserDetails({ userData });
+      UserRepository.updateUserDetails(userData);
       history.push("/dashboard");
     } else {
       alert("Invalid data entered");
