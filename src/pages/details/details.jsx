@@ -6,10 +6,13 @@ import { HobbyRepository } from "../../repositories/HobbyRepository";
 import { DinosaurRepository } from "../../repositories/DinosaurRepository";
 import { ProfessionRepository } from "../../repositories/ProfessionRepository";
 import { UserRepository } from "../../repositories/UserRepository";
+import { useHistory } from "react-router-dom";
 
 const animatedComponents = makeAnimated();
 
 const Details = () => {
+  const history = useHistory();
+
   const [selectedHobbies, setSelectedHobbies] = useState([]);
   const [selectedProfession, setSelectedProfession] = useState();
   const [selectedDinosaur, setSelectedDinosaur] = useState();
@@ -59,6 +62,7 @@ const Details = () => {
       nthChild,
     };
     UserRepository.updateUserDetails({ userData });
+    history.push("/dashboard");
   };
 
   return (
