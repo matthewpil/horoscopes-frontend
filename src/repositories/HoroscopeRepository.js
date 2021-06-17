@@ -1,7 +1,7 @@
 import { CallType } from "./CallType";
 import { requests } from "./request";
 
-const ENDPOINT = `${process.env.REACT_APP_API_BASE}`;
+const ENDPOINT = `${process.env.REACT_APP_API_BASE}Horoscope/`;
 const mockResult = {
   Daily: "Daily horoscope",
   Career: "Career horoscope",
