@@ -17,7 +17,6 @@ export default function StarRating(props) {
           defaultValue={starRatings[property]}
           precision={1}
           readOnly
-          
         />
       </section>
     );
@@ -31,9 +30,7 @@ export default function StarRating(props) {
         <h3>Todays Star Ratings</h3>
         <p> Your mood today</p>
       </section>
-      <section className="star-ratings-values">
-        {starRatingsList}
-      </section>
+      <section className="star-ratings-values">{starRatingsList}</section>
     </section>
   );
 }
