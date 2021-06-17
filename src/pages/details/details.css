@@ -51,7 +51,7 @@ html {
   margin-right: auto;
 }
 
-.generate_horoscope_button input {
+.generate_horoscope_button button {
   font-size: 25px;
   margin: 2%;
   font-weight: 600;
@@ -60,7 +60,7 @@ html {
   color: var(--background);
 }
 
-.generate_horoscope_button input:hover {
+.generate_horoscope_button button:hover {
   background-color: var(--background);
   color: var(--foreground);
 }

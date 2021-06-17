@@ -1,39 +1,65 @@
 import "./details.css";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { useState } from "react";
 
 const animatedComponents = makeAnimated();
 
-export default function Details() {
-  const hobbies = [
-    { value: "Fishing", label: "Fishing" },
-    { value: "Hunting", label: "Hunting" },
-  ];
+//TODO: replace mock values with results from repo
 
-  const dinosaurs = [
-    { value: "Triceratops", label: "Triceratops" },
-    { value: "Tyrannosaurus", label: "Tyrannosaurus" },
-    { value: "Stegosaurus", label: "Stegosaurus" },
-    { value: "Brachiosaurus", label: "Brachiosaurus" },
-    { value: "Baryonyx", label: "Baryonyx" },
-    { value: "Ankylosaurus", label: "Ankylosaurus" },
-    { value: "Oviraptor", label: "Oviraptor" },
-  ];
+const hobbies = [
+  { value: "Fishing", label: "Fishing" },
+  { value: "Hunting", label: "Hunting" },
+];
 
-  const professions = [{ value: "Docter", label: "Doctor" }];
+const dinosaurs = [
+  { value: "Triceratops", label: "Triceratops" },
+  { value: "Tyrannosaurus", label: "Tyrannosaurus" },
+  { value: "Stegosaurus", label: "Stegosaurus" },
+  { value: "Brachiosaurus", label: "Brachiosaurus" },
+  { value: "Baryonyx", label: "Baryonyx" },
+  { value: "Ankylosaurus", label: "Ankylosaurus" },
+  { value: "Oviraptor", label: "Oviraptor" },
+];
+
+const professions = [{ value: "Docter", label: "Doctor" }];
+
+const Details = () => {
+  const [selectedHobbies, setSelectedHobbies] = useState([]);
+  const [selectedProfession, setSelectedProfession] = useState();
+  const [selectedDinosaur, setSelectedDinosaur] = useState();
+  const [dateOfBirth, setDateOfBirth] = useState();
+  const [nthChild, setNthChild] = useState(1);
+
+  const updateUserDetails = () => {
+    const updatedUserDetails = {
+      selectedHobbies,
+      selectedProfession,
+      selectedDinosaur,
+      dateOfBirth,
+      nthChild,
+    };
+    //TODO: call method on repo to update user
+  };
 
   return (
     <div className="horror_scope_container">
       <h1>My Details</h1>
 
-      <form action="/dashboard">
+      <form>
         <table>
           <tr>
             <th>
               <label>1. My date of birth?</label>
             </th>
             <td>
-              <input type="date" />
+              <input
+                type="date"
+                onChange={(e) => {
+                  const dob = new Date(Date.parse(e.target.value));
+                  setDateOfBirth(dob);
+                }}
+              />
             </td>
           </tr>
           <tr>
@@ -42,7 +68,10 @@ export default function Details() {
               <label>2. What is my favourite Dinosaur?</label>{" "}
             </th>
             <td>
-              <Select options={dinosaurs} />
+              <Select
+                options={dinosaurs}
+                onChange={(e) => setSelectedDinosaur(e.value)}
+              />
             </td>
           </tr>
 
@@ -56,7 +85,9 @@ export default function Details() {
                 closeMenuOnSelect={false}
                 options={hobbies}
                 isMulti
-                className="select-input"
+                onChange={(e) => {
+                  setSelectedHobbies(e.map((hobby) => hobby.value));
+                }}
               />
             </td>
           </tr>
@@ -66,7 +97,13 @@ export default function Details() {
               <label>4. I am the nth child of my family?</label>
             </th>
             <td>
-              <input type="number" placeholder="child number" />
+              <input
+                type="number"
+                placeholder="child number"
+                onChange={(e) => {
+                  setNthChild(e.target.value);
+                }}
+              />
             </td>
           </tr>
 
@@ -75,14 +112,21 @@ export default function Details() {
               <label>5. My Profession</label>
             </th>
             <td>
-              <Select options={professions} />
+              <Select
+                options={professions}
+                onChange={(e) => setSelectedProfession(e.value)}
+              />
             </td>
           </tr>
         </table>
         <div className="generate_horoscope_button">
-          <input type="submit" value="Continue" />
+          <button type="submit" onClick={updateUserDetails}>
+            Continue
+          </button>
         </div>
       </form>
     </div>
   );
-}
+};
+
+export default Details;
