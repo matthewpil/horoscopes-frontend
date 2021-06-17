@@ -1,6 +1,7 @@
 /* eslint-disable no-lone-blocks */
 import { useState } from "react";
 import StarRating from "../../components/starRatings/starRatings";
+import ModalPopUp from "../../components/modal/modal";
 import "./dashboard.css";
 const MONTH_AS_TEXT = [
   "January",
@@ -18,6 +19,13 @@ const MONTH_AS_TEXT = [
   "December",
 ];
 
+const pastHoroscopes = [
+  "Horoscope 1",
+  "Horoscope 2",
+  "Horoscope 3",
+  "Horoscope 4",
+];
+
 function getTodaysDate() {
   let todayDate = new Date();
   return (
@@ -28,12 +36,15 @@ function getTodaysDate() {
     todayDate.getFullYear()
   );
 }
+
 export default function Dashboard() {
   const [HOROSCOPE_TYPE_TABS, setHoroscopeTabs] = useState({
     Daily: { isClicked: true },
     Career: { isClicked: false },
     Love: { isClicked: false },
   });
+
+  const [showModal, setShowModal] = useState(false);
 
   const setSelectedTab = (tab_name) => {
     let newTabs = { ...HOROSCOPE_TYPE_TABS };
@@ -61,7 +72,12 @@ export default function Dashboard() {
           <div className="dashboard_container_display_horoscope_header">
             <span className="todays_date">{getTodaysDate()}</span>
 
-            <button className="view_all_button">View All Horoscopes</button>
+            <button
+              className="view_all_button"
+              onClick={() => setShowModal(true)}
+            >
+              View Past Horoscopes
+            </button>
           </div>
           <p id="horoscope_content">View your daily horoscope here</p>
         </div>
@@ -79,7 +95,13 @@ export default function Dashboard() {
             );
           })}
         </div>
-
+        <section>
+          <ModalPopUp
+            closeModal={() => setShowModal(false)}
+            showModal={showModal}
+            pastHoroscopes={pastHoroscopes}
+          />
+        </section>
         <section className="dashboard_container_star_ratings">
           <StarRating starRatings={starRatings} />
         </section>
