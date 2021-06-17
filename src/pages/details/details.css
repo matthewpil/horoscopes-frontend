@@ -26,6 +26,20 @@ html {
   padding: 2%;
 }
 
+.horror_scope_container table input {
+  width: 100%;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  cursor: default;
+  min-height: 50px;
+  padding: 2px 8px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
 .generate_horoscope_button {
   width: 60%;
   display: flex;
@@ -55,17 +69,5 @@ html {
 .horror_scope_container table tr td {
   width: 50%;
   text-align: left;
-  font-size: 20px;
   padding: 2%;
-}
-
-.horror_scope_container table tr td select,
-.horror_scope_container table tr td input {
-  width: 90%;
-  font-size: 20px;
-}
-
-.horror_scope_container table tr td select {
-  width: 91.2%;
-  font-size: 20px;
 }
