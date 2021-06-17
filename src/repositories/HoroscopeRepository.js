@@ -1,7 +1,7 @@
 import { CallType } from "./CallType";
 import { requests } from "./request";
 
-const ENDPOINT = `${process.env.REACT_APP_API_BASE}Horoscopes`;
+const ENDPOINT = `${process.env.REACT_APP_API_BASE}`;
 const mockResult = {
   Daily: "Daily horoscope",
   Career: "Career horoscope",
@@ -14,7 +14,7 @@ export const HoroscopeRepository = {
     if (HoroscopeRepository.responseData.Daily && callType === CallType.Cache) {
       return HoroscopeRepository.responseData.Daily;
     }
-    const result = await requests.get(`${ENDPOINT}`);
+    const result = await requests.get(`${ENDPOINT}GeneralHoroscope`);
     HoroscopeRepository.responseData.Daily = result;
     return result;
   },
@@ -25,18 +25,15 @@ export const HoroscopeRepository = {
     ) {
       return HoroscopeRepository.responseData.Career;
     }
-    const result = await requests.get(`${ENDPOINT}`);
+    const result = await requests.get(`${ENDPOINT}CareerHoroscope`);
     HoroscopeRepository.responseData.Career = result;
     return result;
   },
-  getUserLoveHoroscope: async ({
-    userId = 1,
-    callType = CallType.API,
-  } = {}) => {
+  getUserLoveHoroscope: async (callType = CallType.API) => {
     if (HoroscopeRepository.responseData.Love && callType === CallType.Cache) {
       return HoroscopeRepository.responseData.Love;
     }
-    const result = await requests.get(`${ENDPOINT}`);
+    const result = await requests.get(`${ENDPOINT}LoveHoroscope`);
     HoroscopeRepository.responseData.Love = result;
     return result;
   },
