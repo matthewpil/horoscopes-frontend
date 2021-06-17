@@ -19,6 +19,8 @@
   transition: all 0.2s;
   background: none;
   border: none;
+  font-size: 16px;
+  font-family: inherit;
 }
 
 .navbar-link:hover {
