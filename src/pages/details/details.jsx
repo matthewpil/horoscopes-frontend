@@ -6,7 +6,7 @@ import { HobbyRepository } from "../../repositories/HobbyRepository";
 import { DinosaurRepository } from "../../repositories/DinosaurRepository";
 import { ProfessionRepository } from "../../repositories/ProfessionRepository";
 import { UserRepository } from "../../repositories/UserRepository";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import CurrentUser from "../../singletons/CurrentUser";
 import validateUserDetails from "../../utils/validation/validateUserDetails";
 
@@ -28,6 +28,7 @@ const Details = () => {
     const hobbiesPromise = HobbyRepository.getHobbies();
     const professionsPromise = ProfessionRepository.getProfessions();
     const dinosaursPromise = DinosaurRepository.getDinosaurs();
+
     Promise.all([hobbiesPromise, professionsPromise, dinosaursPromise]).then(
       (values) => {
         setHobbies(
@@ -48,7 +49,7 @@ const Details = () => {
 
         const currentUser = CurrentUser.get();
         if (!validateUserDetails(currentUser)) {
-          return <Redirect to={"/"} />;
+          return;
         }
 
         setSelectedProfession(
@@ -72,108 +73,122 @@ const Details = () => {
         setNthChild(currentUser.nthChild);
       }
     );
-  });
+  }, []);
 
   const updateUserDetails = () => {
     const userData = {
-      selectedHobbies,
-      selectedProfession,
-      selectedDinosaur,
-      dateOfBirth,
+      hobbies: selectedHobbies.map((element) => {
+        return { name: element?.value };
+      }),
+      profession: { name: selectedProfession?.value },
+      favoriteDinosaur: { name: selectedDinosaur?.value },
+      dateOfBirth: new Date(Date.parse(dateOfBirth)),
       nthChild,
     };
-    UserRepository.updateUserDetails({ userData });
-    history.push("/dashboard");
+
+    if (validateUserDetails(userData)) {
+      //TODO: READD WHEN FUNCTION EXISTS
+      // UserRepository.updateUserDetails({ userData });
+      history.push("/dashboard");
+    } else {
+      alert("Invalid data entered");
+    }
   };
 
   return (
     <div className="horror_scope_container">
       <h1>My Details</h1>
 
-      <form>
-        <table>
-          <tr>
-            <th>
-              <label>1. My date of birth?</label>
-            </th>
-            <td>
-              <input
-                type="date"
-                value={dateOfBirth}
-                onChange={(e) => {
-                  const dob = new Date(Date.parse(e.target.value));
-                  setDateOfBirth(dob);
-                }}
-              />
-            </td>
-          </tr>
-          <tr>
-            <th>
-              {" "}
-              <label>2. What is my favourite Dinosaur?</label>{" "}
-            </th>
-            <td>
-              <Select
-                value={selectedDinosaur}
-                options={dinosaurs}
-                onChange={(e) => setSelectedDinosaur({ name: e.value })}
-              />
-            </td>
-          </tr>
+      <table>
+        <tr>
+          <th>
+            <label>1. My date of birth?</label>
+          </th>
+          <td>
+            <input
+              type="date"
+              value={dateOfBirth}
+              onChange={(e) => {
+                setDateOfBirth(e.target.value);
+              }}
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>
+            {" "}
+            <label>2. What is my favourite Dinosaur?</label>{" "}
+          </th>
+          <td>
+            <Select
+              value={selectedDinosaur}
+              options={dinosaurs}
+              onChange={(e) =>
+                setSelectedDinosaur({ value: e.value, label: e.value })
+              }
+            />
+          </td>
+        </tr>
 
-          <tr>
-            <th>
-              <label>3. What are my hobbies?</label>{" "}
-            </th>
-            <td>
-              <Select
-                value={selectedHobbies}
-                components={animatedComponents}
-                closeMenuOnSelect={false}
-                options={hobbies}
-                isMulti
-                onChange={(e) => {
-                  setSelectedHobbies(e.map((hobby) => ({ name: hobby })));
-                }}
-              />
-            </td>
-          </tr>
+        <tr>
+          <th>
+            <label>3. What are my hobbies?</label>{" "}
+          </th>
+          <td>
+            <Select
+              value={selectedHobbies}
+              components={animatedComponents}
+              closeMenuOnSelect={false}
+              options={hobbies}
+              isMulti
+              onChange={(e) => {
+                setSelectedHobbies(
+                  e.map((hobby) => ({
+                    value: hobby.value,
+                    label: hobby.label,
+                  }))
+                );
+              }}
+            />
+          </td>
+        </tr>
 
-          <tr>
-            <th>
-              <label>4. I am the nth child of my family?</label>
-            </th>
-            <td>
-              <input
-                value={nthChild}
-                type="number"
-                placeholder="child number"
-                onChange={(e) => {
+        <tr>
+          <th>
+            <label>4. I am the nth child of my family?</label>
+          </th>
+          <td>
+            <input
+              value={nthChild}
+              type="number"
+              placeholder="child number"
+              onChange={(e) => {
+                if (e.target.value >= 1) {
                   setNthChild(e.target.value);
-                }}
-              />
-            </td>
-          </tr>
+                }
+              }}
+            />
+          </td>
+        </tr>
 
-          <tr>
-            <th>
-              <label>5. My Profession</label>
-            </th>
-            <td>
-              <Select
-                value={selectedProfession}
-                options={professions}
-                onChange={(e) => setSelectedProfession({ name: e.value })}
-              />
-            </td>
-          </tr>
-        </table>
-        <div className="generate_horoscope_button">
-          <button type="submit" onClick={updateUserDetails}>
-            Continue
-          </button>
-        </div>
-      </form>
+        <tr>
+          <th>
+            <label>5. My Profession</label>
+          </th>
+          <td>
+            <Select
+              value={selectedProfession}
+              options={professions}
+              onChange={(e) =>
+                setSelectedProfession({ value: e.value, label: e.value })
+              }
+            />
+          </td>
+        </tr>
+      </table>
+      <div className="generate_horoscope_button">
+        <button onClick={updateUserDetails}>Continue</button>
+      </div>
     </div>
   );
 };
