@@ -6,6 +6,7 @@ import { HoroscopeRepository } from "../../repositories/HoroscopeRepository";
 import { StarRatingsRepository } from "../../repositories/StarRatingsRepository";
 import ModalPopUp from "../../components/modal/modal";
 import "./dashboard.css";
+import MatchesCard from "../../components/cards/matches_card/matches_card";
 
 const MONTH_AS_TEXT = [
   "January",
@@ -133,15 +134,18 @@ export default function Dashboard() {
             );
           })}
         </div>
-        <section>
-          <ModalPopUp
-            closeModal={() => setShowModal(false)}
-            showModal={showModal}
-            pastHoroscopes={pastHoroscopes}
-          />
-        </section>
+
+        <ModalPopUp
+          closeModal={() => setShowModal(false)}
+          showModal={showModal}
+          pastHoroscopes={pastHoroscopes}
+        />
+
         <section className="dashboard_container_star_ratings">
           <StarRating starRatings={starRatings} />
+        </section>
+        <section className="matches-card-component">
+          <MatchesCard />
         </section>
       </div>
     </div>
