@@ -1,28 +1,12 @@
 import "./details.css";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { HobbyRepository } from "../../repositories/HobbyRepository";
+import { DinosaurRepository } from "../../repositories/DinosaurRepository";
+import { ProfessionRepository } from "../../repositories/ProfessionRepository";
 
 const animatedComponents = makeAnimated();
-
-//TODO: replace mock values with results from repo
-
-const hobbies = [
-  { value: "Fishing", label: "Fishing" },
-  { value: "Hunting", label: "Hunting" },
-];
-
-const dinosaurs = [
-  { value: "Triceratops", label: "Triceratops" },
-  { value: "Tyrannosaurus", label: "Tyrannosaurus" },
-  { value: "Stegosaurus", label: "Stegosaurus" },
-  { value: "Brachiosaurus", label: "Brachiosaurus" },
-  { value: "Baryonyx", label: "Baryonyx" },
-  { value: "Ankylosaurus", label: "Ankylosaurus" },
-  { value: "Oviraptor", label: "Oviraptor" },
-];
-
-const professions = [{ value: "Docter", label: "Doctor" }];
 
 const Details = () => {
   const [selectedHobbies, setSelectedHobbies] = useState([]);
@@ -30,6 +14,35 @@ const Details = () => {
   const [selectedDinosaur, setSelectedDinosaur] = useState();
   const [dateOfBirth, setDateOfBirth] = useState();
   const [nthChild, setNthChild] = useState(1);
+
+  const [hobbies, setHobbies] = useState([]);
+  const [dinosaurs, setDinosaurs] = useState([]);
+  const [professions, setProfessions] = useState([]);
+
+  useEffect(() => {
+    HobbyRepository.getHobbies().then((hobbies) => {
+      setHobbies(hobbies.map((hobby) => ({ value: hobby, label: hobby })));
+    });
+  }, []);
+
+  useEffect(() => {
+    ProfessionRepository.getProfessions().then((professions) => {
+      setProfessions(
+        professions.map((profession) => ({
+          value: profession,
+          label: profession,
+        }))
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    DinosaurRepository.getDinosaurs().then((dinosaurs) => {
+      setDinosaurs(
+        dinosaurs.map((dinosaur) => ({ value: dinosaur, label: dinosaur }))
+      );
+    });
+  }, []);
 
   const updateUserDetails = () => {
     const updatedUserDetails = {
