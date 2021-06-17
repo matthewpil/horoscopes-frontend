@@ -12,15 +12,12 @@ const mockResult = {
 export const StarRatingsRepository = {
   responseData: mockResult,
 
-  getUserDailyStarRatings: async ({
-    userId = 1,
-    callType = CallType.API,
-  } = {}) => {
+  getUserDailyStarRatings: async (callType = CallType.API) => {
     if (StarRatingsRepository.responseData && callType === CallType.Cache) {
       return StarRatingsRepository.responseData;
     }
 
-    const result = await requests.get(`${ENDPOINT}/${userId}`);
+    const result = await requests.get(`${ENDPOINT}`);
     StarRatingsRepository.responseData = result;
     return result;
   },

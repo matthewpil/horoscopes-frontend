@@ -13,12 +13,15 @@ const mockResult = {
 export const DailyMatchesRepository = {
   responseData: mockResult,
 
-  getUserDailyMatches: async ({ userId = 1, callType = CallType.API } = {}) => {
+  getUserDailyMatches: async ({
+    starSignId = "Aries",
+    callType = CallType.API,
+  } = {}) => {
     if (DailyMatchesRepository.responseData && callType === CallType.Cache) {
       return DailyMatchesRepository.responseData;
     }
 
-    const result = await requests.get(`${ENDPOINT}/${userId}/matches`);
+    const result = await requests.get(`${ENDPOINT}/${starSignId}/matches`);
     DailyMatchesRepository.responseData = result;
     return result;
   },

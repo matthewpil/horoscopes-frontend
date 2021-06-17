@@ -10,28 +10,22 @@ const mockResult = {
 //TODO: Fix these endpoints once they are in backend
 export const HoroscopeRepository = {
   responseData: mockResult,
-  getUserDailyHoroscope: async ({
-    userId = 1,
-    callType = CallType.API,
-  } = {}) => {
+  getUserDailyHoroscope: async (callType = CallType.API) => {
     if (HoroscopeRepository.responseData.Daily && callType === CallType.Cache) {
       return HoroscopeRepository.responseData.Daily;
     }
-    const result = await requests.get(`${ENDPOINT}/${userId}`);
+    const result = await requests.get(`${ENDPOINT}`);
     HoroscopeRepository.responseData.Daily = result;
     return result;
   },
-  getUserCareerHoroscope: async ({
-    userId = 1,
-    callType = CallType.API,
-  } = {}) => {
+  getUserCareerHoroscope: async (callType = CallType.API) => {
     if (
       HoroscopeRepository.responseData.Career &&
       callType === CallType.Cache
     ) {
       return HoroscopeRepository.responseData.Career;
     }
-    const result = await requests.get(`${ENDPOINT}/${userId}`);
+    const result = await requests.get(`${ENDPOINT}`);
     HoroscopeRepository.responseData.Career = result;
     return result;
   },
@@ -42,7 +36,7 @@ export const HoroscopeRepository = {
     if (HoroscopeRepository.responseData.Love && callType === CallType.Cache) {
       return HoroscopeRepository.responseData.Love;
     }
-    const result = await requests.get(`${ENDPOINT}/${userId}`);
+    const result = await requests.get(`${ENDPOINT}`);
     HoroscopeRepository.responseData.Love = result;
     return result;
   },
