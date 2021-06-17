@@ -10,6 +10,7 @@ import MatchesCard from "../../components/cards/matches_card/matches_card";
 import { DailyMatchesRepository } from "../../repositories/DailyMatchesRepository";
 import CurrentUser from "../../singletons/CurrentUser";
 import { zodiacSigns } from "../../constants/zodiac_signs";
+import { PastHoroscopesRepository } from "../../repositories/PastHoroscopesRepository";
 
 const MONTH_AS_TEXT = [
   "January",
@@ -46,6 +47,7 @@ function getTodaysDate() {
 }
 
 export default function Dashboard() {
+  const [pastHoroscopes, setPastHoroscopes] = useState([]);
   const [selectedTabKey, setSelectedTabKey] = useState("Daily");
   const [dailyHoroscope, setDailyHoroscope] = useState("Querying the stars...");
   const [careerHoroscope, setCareerHoroscope] = useState(
@@ -91,12 +93,16 @@ export default function Dashboard() {
       starSignId: CurrentUser.get()?.starSign?.name,
     }).then((response) => {
       const map = {
-        love: findSign(response.loveMatch.name),
-        friendship: findSign(response.friendshipMatch.name),
-        career: findSign(response.careerMatch.name),
+        love: findSign(response?.loveMatch?.name),
+        friendship: findSign(response?.friendshipMatch?.name),
+        career: findSign(response?.careerMatch?.name),
       };
 
       setDailyMatches(map);
+    });
+
+    PastHoroscopesRepository.getUserPastHoroscopes().then((response) => {
+      setPastHoroscopes(response.map((element) => element.reading));
     });
   }, []);
 
