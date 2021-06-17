@@ -21,7 +21,9 @@ const Details = () => {
 
   useEffect(() => {
     HobbyRepository.getHobbies().then((hobbies) => {
-      setHobbies(hobbies.map((hobby) => ({ value: hobby, label: hobby })));
+      setHobbies(
+        hobbies.map((hobby) => ({ value: hobby.Name, label: hobby.Name }))
+      );
     });
   }, []);
 
@@ -29,8 +31,8 @@ const Details = () => {
     ProfessionRepository.getProfessions().then((professions) => {
       setProfessions(
         professions.map((profession) => ({
-          value: profession,
-          label: profession,
+          value: profession.Name,
+          label: profession.Name,
         }))
       );
     });
@@ -39,7 +41,10 @@ const Details = () => {
   useEffect(() => {
     DinosaurRepository.getDinosaurs().then((dinosaurs) => {
       setDinosaurs(
-        dinosaurs.map((dinosaur) => ({ value: dinosaur, label: dinosaur }))
+        dinosaurs.map((dinosaur) => ({
+          value: dinosaur.Name,
+          label: dinosaur.Name,
+        }))
       );
     });
   }, []);
