@@ -15,7 +15,7 @@ export default function MatchesCard(props) {
       <main>
         {Object.keys(signs).map((key) => {
           return (
-            <section>
+            <section className="matches-card-section">
               <h3>{key.toUpperCase()}</h3>
               <article className="icon">
                 <Icon type={signs[key]} />

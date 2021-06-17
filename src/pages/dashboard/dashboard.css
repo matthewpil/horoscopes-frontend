@@ -98,3 +98,8 @@
 .welcome_message {
   text-align: center;
 }
+
+.matches-card-component {
+  margin: 10vw;
+  margin-top: 2vw;
+}
