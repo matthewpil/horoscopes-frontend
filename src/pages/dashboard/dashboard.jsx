@@ -4,8 +4,9 @@ import { useState } from "react";
 import StarRating from "../../components/starRatings/starRatings";
 import { HoroscopeRepository } from "../../repositories/HoroscopeRepository";
 import { StarRatingsRepository } from "../../repositories/StarRatingsRepository";
-
+import ModalPopUp from "../../components/modal/modal";
 import "./dashboard.css";
+
 const MONTH_AS_TEXT = [
   "January",
   "February",
@@ -22,6 +23,13 @@ const MONTH_AS_TEXT = [
   "December",
 ];
 
+const pastHoroscopes = [
+  "Horoscope 1",
+  "Horoscope 2",
+  "Horoscope 3",
+  "Horoscope 4",
+];
+
 function getTodaysDate() {
   let todayDate = new Date();
   return (
@@ -32,6 +40,7 @@ function getTodaysDate() {
     todayDate.getFullYear()
   );
 }
+
 export default function Dashboard() {
   const [selectedTabKey, setSelectedTabKey] = useState("Daily");
   const [dailyHoroscope, setDailyHoroscope] = useState("Querying the stars...");
@@ -40,6 +49,7 @@ export default function Dashboard() {
   );
   const [loveHoroscope, setLoveHoroscope] = useState("Querying the stars...");
   const [starRatings, setStarRatings] = useState();
+  const [showModal, setShowModal] = useState(false);
 
   const [HOROSCOPE_TYPE_TABS, setHoroscopeTabs] = useState({
     Daily: { isClicked: true, text: dailyHoroscope },
@@ -85,7 +95,12 @@ export default function Dashboard() {
           <div className="dashboard_container_display_horoscope_header">
             <span className="todays_date">{getTodaysDate()}</span>
 
-            <button className="view_all_button">View All Horoscopes</button>
+            <button
+              className="view_all_button"
+              onClick={() => setShowModal(true)}
+            >
+              View Past Horoscopes
+            </button>
           </div>
           <p id="horoscope_content">
             {HOROSCOPE_TYPE_TABS[selectedTabKey].text}
@@ -105,7 +120,13 @@ export default function Dashboard() {
             );
           })}
         </div>
-
+        <section>
+          <ModalPopUp
+            closeModal={() => setShowModal(false)}
+            showModal={showModal}
+            pastHoroscopes={pastHoroscopes}
+          />
+        </section>
         <section className="dashboard_container_star_ratings">
           <StarRating starRatings={starRatings} />
         </section>

@@ -1,89 +1,155 @@
 import "./details.css";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import React, { useEffect, useState } from "react";
+import { HobbyRepository } from "../../repositories/HobbyRepository";
+import { DinosaurRepository } from "../../repositories/DinosaurRepository";
+import { ProfessionRepository } from "../../repositories/ProfessionRepository";
+import { UserRepository } from "../../repositories/UserRepository";
+import { useHistory } from "react-router-dom";
 
-export default function Details() {
+const animatedComponents = makeAnimated();
+
+const Details = () => {
+  const history = useHistory();
+
+  const [selectedHobbies, setSelectedHobbies] = useState([]);
+  const [selectedProfession, setSelectedProfession] = useState();
+  const [selectedDinosaur, setSelectedDinosaur] = useState();
+  const [dateOfBirth, setDateOfBirth] = useState();
+  const [nthChild, setNthChild] = useState(1);
+
+  const [hobbies, setHobbies] = useState([]);
+  const [dinosaurs, setDinosaurs] = useState([]);
+  const [professions, setProfessions] = useState([]);
+
+  useEffect(() => {
+    HobbyRepository.getHobbies().then((hobbies) => {
+      setHobbies(
+        hobbies.map((hobby) => ({ value: hobby.name, label: hobby.name }))
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    ProfessionRepository.getProfessions().then((professions) => {
+      setProfessions(
+        professions.map((profession) => ({
+          value: profession.name,
+          label: profession.name,
+        }))
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    DinosaurRepository.getDinosaurs().then((dinosaurs) => {
+      setDinosaurs(
+        dinosaurs.map((dinosaur) => ({
+          value: dinosaur.name,
+          label: dinosaur.name,
+        }))
+      );
+    });
+  }, []);
+
+  const updateUserDetails = () => {
+    const userData = {
+      selectedHobbies,
+      selectedProfession,
+      selectedDinosaur,
+      dateOfBirth,
+      nthChild,
+    };
+    UserRepository.updateUserDetails({ userData });
+    history.push("/dashboard");
+  };
+
   return (
     <div className="horror_scope_container">
-      <h1>Your Details</h1>
+      <h1>My Details</h1>
 
-      <form action="/dashboard">
+      <form>
         <table>
           <tr>
             <th>
-              <label>1. Enter your date of birth?</label>
+              <label>1. My date of birth?</label>
             </th>
             <td>
-              <input type="date" />
+              <input
+                type="date"
+                onChange={(e) => {
+                  const dob = new Date(Date.parse(e.target.value));
+                  setDateOfBirth(dob);
+                }}
+              />
             </td>
           </tr>
-
           <tr>
             <th>
               {" "}
-              <label>2. What is your favourite Dinosaur?</label>{" "}
+              <label>2. What is my favourite Dinosaur?</label>{" "}
             </th>
             <td>
-              {" "}
-              <select>
-                <option>Triceratops</option>
-                <option>Tyrannosaurus</option>
-                <option>Stegosaurus</option>
-                <option>Brachiosaurus</option>
-                <option>Baryonyx</option>
-                <option>Ankylosaurus</option>
-                <option>Oviraptor</option>
-              </select>
+              <Select
+                options={dinosaurs}
+                onChange={(e) => setSelectedDinosaur({ name: e.value })}
+              />
             </td>
           </tr>
 
           <tr>
             <th>
-              <label>3. What is your star sign?</label>
+              <label>3. What are my hobbies?</label>{" "}
             </th>
             <td>
-              <select>
-                <option>Star Sign 1</option>
-                <option>Star Sign 2</option>
-              </select>
+              <Select
+                components={animatedComponents}
+                closeMenuOnSelect={false}
+                options={hobbies}
+                isMulti
+                onChange={(e) => {
+                  setSelectedHobbies(e.map((hobby) => ({ name: hobby })));
+                }}
+              />
             </td>
           </tr>
 
           <tr>
             <th>
-              <label>4. What is your hobby?</label>{" "}
+              <label>4. I am the nth child of my family?</label>
             </th>
             <td>
-              <select>
-                <option>Fishing</option>
-                <option>Metal tracking</option>
-              </select>
+              <input
+                type="number"
+                placeholder="child number"
+                onChange={(e) => {
+                  setNthChild(e.target.value);
+                }}
+              />
             </td>
           </tr>
 
           <tr>
             <th>
-              <label>5. I am the nth child of my family?</label>
+              <label>5. My Profession</label>
             </th>
             <td>
-              <input type="number" placeholder="child number" />
-            </td>
-          </tr>
-
-          <tr>
-            <th>
-              <label>6. My Profession</label>
-            </th>
-            <td>
-              <select>
-                <option>Doctor</option>
-                <option>Game Design</option>
-              </select>
+              <Select
+                options={professions}
+                onChange={(e) => setSelectedProfession({ name: e.value })}
+              />
             </td>
           </tr>
         </table>
         <div className="generate_horoscope_button">
-          <input type="submit" value="Continue" />
+          <button type="submit" onClick={updateUserDetails}>
+            Continue
+          </button>
         </div>
       </form>
     </div>
   );
-}
+};
+
+export default Details;
