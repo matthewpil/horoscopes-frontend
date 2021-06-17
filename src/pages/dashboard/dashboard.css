@@ -99,7 +99,7 @@
 
 @media screen and (max-width: 769px) {
   .dashboard_container_display_tab {
-    width: 80vw;
+    width: 75vw;
     height: 10vh;
     margin-left: 10vw;
     font-size: 25px;
