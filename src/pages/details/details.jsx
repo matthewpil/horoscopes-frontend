@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { HobbyRepository } from "../../repositories/HobbyRepository";
 import { DinosaurRepository } from "../../repositories/DinosaurRepository";
 import { ProfessionRepository } from "../../repositories/ProfessionRepository";
+import { UserRepository } from "../../repositories/UserRepository";
 
 const animatedComponents = makeAnimated();
 
@@ -22,7 +23,7 @@ const Details = () => {
   useEffect(() => {
     HobbyRepository.getHobbies().then((hobbies) => {
       setHobbies(
-        hobbies.map((hobby) => ({ value: hobby.Name, label: hobby.Name }))
+        hobbies.map((hobby) => ({ value: hobby.name, label: hobby.name }))
       );
     });
   }, []);
@@ -31,8 +32,8 @@ const Details = () => {
     ProfessionRepository.getProfessions().then((professions) => {
       setProfessions(
         professions.map((profession) => ({
-          value: profession.Name,
-          label: profession.Name,
+          value: profession.name,
+          label: profession.name,
         }))
       );
     });
@@ -42,22 +43,22 @@ const Details = () => {
     DinosaurRepository.getDinosaurs().then((dinosaurs) => {
       setDinosaurs(
         dinosaurs.map((dinosaur) => ({
-          value: dinosaur.Name,
-          label: dinosaur.Name,
+          value: dinosaur.name,
+          label: dinosaur.name,
         }))
       );
     });
   }, []);
 
   const updateUserDetails = () => {
-    const updatedUserDetails = {
+    const userData = {
       selectedHobbies,
       selectedProfession,
       selectedDinosaur,
       dateOfBirth,
       nthChild,
     };
-    //TODO: call method on repo to update user
+    UserRepository.updateUserDetails({ userData });
   };
 
   return (
@@ -88,7 +89,7 @@ const Details = () => {
             <td>
               <Select
                 options={dinosaurs}
-                onChange={(e) => setSelectedDinosaur(e.value)}
+                onChange={(e) => setSelectedDinosaur({ name: e.value })}
               />
             </td>
           </tr>
@@ -104,7 +105,7 @@ const Details = () => {
                 options={hobbies}
                 isMulti
                 onChange={(e) => {
-                  setSelectedHobbies(e.map((hobby) => hobby.value));
+                  setSelectedHobbies(e.map((hobby) => ({ name: hobby })));
                 }}
               />
             </td>
@@ -132,7 +133,7 @@ const Details = () => {
             <td>
               <Select
                 options={professions}
-                onChange={(e) => setSelectedProfession(e.value)}
+                onChange={(e) => setSelectedProfession({ name: e.value })}
               />
             </td>
           </tr>
