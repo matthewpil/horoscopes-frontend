@@ -98,7 +98,9 @@ export default function Dashboard() {
         career: findSign(response?.careerMatch?.name),
       };
 
-      setDailyMatches(map);
+      if (map.love && map.friendship && map.career) {
+        setDailyMatches(map);
+      }
     });
 
     PastHoroscopesRepository.getUserPastHoroscopes().then((response) => {

@@ -27,6 +27,9 @@ const post = (url, params) => {
 const put = (url, params) => {
   const options = {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
   };
 
   return request(url, { ...options, ...params });
