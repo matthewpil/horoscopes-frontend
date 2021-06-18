@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { login } from "../../utils/auth/login";
 import { requests } from "../../repositories/request"
 
-const AUTH_ENDPOINT = `${process.env.REACT_APP_API_BASE}api/Auth/Google`;
+const AUTH_ENDPOINT = `${process.env.REACT_APP_API_BASE}Auth/Google`;
 
 export default function Home() {
   const history = useHistory();
