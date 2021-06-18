@@ -1,0 +1,67 @@
+.modal-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-container-body {
+  width: 50%;
+  background-color: var(--foreground);
+  text-align: center;
+  height: 90vh;
+}
+
+.modal-container-header {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: var(--background);
+  color: var(--foreground);
+  position: fixed;
+  top: 20px;
+  width: 46%;
+  padding: 2%;
+  font-size: 25px;
+}
+
+.modal-container-content {
+  width: 96%;
+  padding: 2%;
+  height: 75vh;
+  margin-top: 10vh;
+  overflow-y: scroll;
+}
+
+.modal-container-footer {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: var(--background);
+  position: fixed;
+  bottom: 30px;
+  width: 46%;
+  padding: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-container-footer button {
+  width: 50%;
+  padding: 2%;
+  font-size: 20px;
+  background-color: var(--foreground);
+  color: var(--background);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.past-horoscope {
+  width: 98%;
+  padding: 1%;
+  border-bottom: 1px solid rgb(0, 0, 50);
+}

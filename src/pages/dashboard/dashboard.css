@@ -1,26 +1,15 @@
-html {
-  --background-header: rgb(200, 0, 0);
-  --background-header-accent: rgb(140, 0, 0);
-  --foreground-header: rgb(255, 255, 255);
-  --card-selected: rgb(0, 140, 0);
-  --card-selected-accent: rgb(0, 80, 0);
-}
-
 .dashboard_container_display_horoscope {
   border-radius: 20px;
-  width: 77vw;
   margin-right: 10vw;
   margin-left: 10vw;
-  height: 40vh;
+  min-height: 300px;
   background-color: var(--background-header);
   color: var(--foreground-header);
-  float: left;
 }
 
 .dashboard_container_display_horoscope p {
-  width: 98%;
-  padding: 1%;
-  float: left;
+  padding: 10px;
+  flex-grow: 1;
   font-size: 20px;
 }
 
@@ -28,25 +17,36 @@ html {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   background-color: var(--foreground-header);
-  width: 96%;
-  padding: 2%;
-  float: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px;
+}
+.dashboard_container_display_tabs {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 10px;
+  margin-right: 10vw;
+  margin-left: 10vw;
+  flex-wrap: wrap;
 }
 
 .dashboard_container_display_tab {
   border-radius: 10px;
   background-color: var(--background-header);
   color: var(--foreground-header);
-  float: left;
-  width: 18vw;
-  height: 10vh;
-  margin-left: 11vw;
+  flex-grow: 1;
+  margin: 10px 10px;
+  max-width: 300px;
+  min-width: 150px;
   text-align: center;
   font-size: 20px;
-  margin-top: 10vh;
-  padding-top: 5vh;
-  margin-bottom: 5vh;
   cursor: pointer;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dashboard_container_display_tab.is-clicked {
@@ -63,36 +63,35 @@ html {
 
 .dashboard_container {
   border: 1px solid var(--background-header-accent);
-  margin: 2%;
-  width: 96vw;
-  float: left;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
 }
 .dashboard_container_header {
-  margin: 2%;
-  float: left;
-  width: 92vw;
+  margin: 10px;
   font-weight: 600;
   font-size: 20px;
   color: var(--background-header);
   text-align: center;
 }
+
+.dashboard_container_star_ratings {
+  margin-right: 10vw;
+  margin-left: 10vw;
+}
 .todays_date {
-  float: left;
   font-size: 20px;
   color: var(--background-header);
   font-weight: 600;
 }
 
 .view_all_button {
-  float: right;
-}
-
-.view_all_button button {
-  padding: 1%;
   font-size: 20px;
   background-color: var(--background-header);
   color: var(--foreground-header);
-  width: 15vw;
+  min-height: 50px;
+  padding: 10px;
+  margin-left: 20px;
   cursor: pointer;
 }
 
@@ -100,13 +99,7 @@ html {
   text-align: center;
 }
 
-@media screen and (max-width: 769px) {
-  .dashboard_container_display_tab {
-    width: 80vw;
-    height: 10vh;
-    margin-left: 10vw;
-    font-size: 25px;
-    margin-top: 5vh;
-    margin-bottom: 1vh;
-  }
+.matches-card-component {
+  margin: 10vw;
+  margin-top: 2vw;
 }

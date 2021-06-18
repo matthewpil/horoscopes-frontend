@@ -1,6 +1,17 @@
 /* eslint-disable no-lone-blocks */
+import { useEffect } from "react";
 import { useState } from "react";
+import StarRating from "../../components/starRatings/starRatings";
+import { HoroscopeRepository } from "../../repositories/HoroscopeRepository";
+import { StarRatingsRepository } from "../../repositories/StarRatingsRepository";
+import ModalPopUp from "../../components/modal/modal";
 import "./dashboard.css";
+import MatchesCard from "../../components/cards/matches_card/matches_card";
+import { DailyMatchesRepository } from "../../repositories/DailyMatchesRepository";
+import CurrentUser from "../../singletons/CurrentUser";
+import { zodiacSigns } from "../../constants/zodiac_signs";
+import { PastHoroscopesRepository } from "../../repositories/PastHoroscopesRepository";
+
 const MONTH_AS_TEXT = [
   "January",
   "February",
@@ -17,6 +28,13 @@ const MONTH_AS_TEXT = [
   "December",
 ];
 
+const pastHoroscopes = [
+  "Horoscope 1",
+  "Horoscope 2",
+  "Horoscope 3",
+  "Horoscope 4",
+];
+
 function getTodaysDate() {
   let todayDate = new Date();
   return (
@@ -27,12 +45,66 @@ function getTodaysDate() {
     todayDate.getFullYear()
   );
 }
+
 export default function Dashboard() {
+  const [pastHoroscopes, setPastHoroscopes] = useState([]);
+  const [selectedTabKey, setSelectedTabKey] = useState("Daily");
+  const [dailyHoroscope, setDailyHoroscope] = useState("Querying the stars...");
+  const [careerHoroscope, setCareerHoroscope] = useState(
+    "Querying the stars..."
+  );
+  const [dailyMatches, setDailyMatches] = useState();
+  const [loveHoroscope, setLoveHoroscope] = useState("Querying the stars...");
+  const [starRatings, setStarRatings] = useState();
+  const [showModal, setShowModal] = useState(false);
+
   const [HOROSCOPE_TYPE_TABS, setHoroscopeTabs] = useState({
-    Daily: { isClicked: true },
+    Daily: {
+      isClicked: true,
+    },
     Career: { isClicked: false },
     Love: { isClicked: false },
   });
+
+  const findSign = (name) => {
+    console.log(name);
+    return zodiacSigns[
+      Object.keys(zodiacSigns).find(
+        (element) => zodiacSigns[element]?.description === name
+      )
+    ];
+  };
+
+  useEffect(() => {
+    HoroscopeRepository.getUserDailyHoroscope().then((response) => {
+      setDailyHoroscope(response.reading);
+    });
+    HoroscopeRepository.getUserCareerHoroscope().then((response) => {
+      setCareerHoroscope(response.reading);
+    });
+    HoroscopeRepository.getUserLoveHoroscope().then((response) => {
+      setLoveHoroscope(response.reading);
+    });
+
+    StarRatingsRepository.getUserDailyStarRatings().then((response) => {
+      setStarRatings(response);
+    });
+    DailyMatchesRepository.getUserDailyMatches({
+      starSignId: CurrentUser.get()?.starSign?.name,
+    }).then((response) => {
+      const map = {
+        love: findSign(response?.loveMatch?.name),
+        friendship: findSign(response?.friendshipMatch?.name),
+        career: findSign(response?.careerMatch?.name),
+      };
+
+      setDailyMatches(map);
+    });
+
+    PastHoroscopesRepository.getUserPastHoroscopes().then((response) => {
+      setPastHoroscopes(response.map((element) => element.reading));
+    });
+  }, []);
 
   const setSelectedTab = (tab_name) => {
     let newTabs = { ...HOROSCOPE_TYPE_TABS };
@@ -41,8 +113,23 @@ export default function Dashboard() {
     });
 
     newTabs[tab_name].isClicked = true;
+    setSelectedTabKey(tab_name);
     setHoroscopeTabs(newTabs);
   };
+
+  const getHoroscopeText = (selectedTabKey) => {
+    switch (selectedTabKey) {
+      case "Daily":
+        return dailyHoroscope;
+      case "Career":
+        return careerHoroscope;
+      case "Love":
+        return loveHoroscope;
+      default:
+        return "...Querying the stars";
+    }
+  };
+
   return (
     <div className="horror_scope_container">
       <div className="dashboard_container">
@@ -53,24 +140,43 @@ export default function Dashboard() {
         <div className="dashboard_container_display_horoscope">
           <div className="dashboard_container_display_horoscope_header">
             <span className="todays_date">{getTodaysDate()}</span>
-            <span className="view_all_button">
-              <button>View All Horoscopes</button>
-            </span>
-          </div>
-          <p id="horoscope_content">View your daily horoscope here</p>
-        </div>
-        {Object.keys(HOROSCOPE_TYPE_TABS).map((element) => {
-          return (
-            <div
-              className={`dashboard_container_display_tab ${
-                HOROSCOPE_TYPE_TABS[element].isClicked ? "is-clicked" : ""
-              }`}
-              onClick={() => setSelectedTab(element)}
+
+            <button
+              className="view_all_button"
+              onClick={() => setShowModal(true)}
             >
-              {element}
-            </div>
-          );
-        })}
+              View Past Horoscopes
+            </button>
+          </div>
+          <p id="horoscope_content">{getHoroscopeText(selectedTabKey)}</p>
+        </div>
+        <div className="dashboard_container_display_tabs">
+          {Object.keys(HOROSCOPE_TYPE_TABS).map((element) => {
+            return (
+              <div
+                className={`dashboard_container_display_tab ${
+                  HOROSCOPE_TYPE_TABS[element].isClicked ? "is-clicked" : ""
+                }`}
+                onClick={() => setSelectedTab(element)}
+              >
+                {element}
+              </div>
+            );
+          })}
+        </div>
+
+        <ModalPopUp
+          closeModal={() => setShowModal(false)}
+          showModal={showModal}
+          pastHoroscopes={pastHoroscopes}
+        />
+
+        <section className="dashboard_container_star_ratings">
+          <StarRating starRatings={starRatings} />
+        </section>
+        <section className="matches-card-component">
+          <MatchesCard signs={dailyMatches} />
+        </section>
       </div>
     </div>
   );

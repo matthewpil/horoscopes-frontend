@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
@@ -7,8 +7,15 @@ import Details from "./pages/details/details";
 import { authRequired } from "./components/protected_route/auth_required";
 import Navbar from "./components/navbar/navbar";
 import Dashboard from "./pages/dashboard/dashboard";
+import CurrentUser from "./singletons/CurrentUser";
+import { UserRepository } from "./repositories/UserRepository";
 
 function App() {
+  useEffect(() => {
+    UserRepository.getUserDetails().then((response) => {
+      CurrentUser.set(response);
+    });
+  }, []);
   return (
     <>
       <Router>
